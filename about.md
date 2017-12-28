@@ -4,43 +4,29 @@ layout: page
 ---
 ![Profile Image]({{ site.url }}/{{ site.picture }})
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Hello! I'm Hieu (probably pronounced like Hew or Hugh without the G). I'm a Front-End developer with the curiosity to understand how things work and build things that helps me laze around more. At the moment I'm working at <a href="http://www.mios.fi/">Mios Agency</a> (they are a small but cool team), and had some time freelancing for other places too.</p>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>This blog should serve as a archive for my findings in my projects, like gotchas and knowhows. I write whenever I feel motivated enough (or I keep telling myself that).</p>
 
-<h2>Skills</h2>
+<h2>Things I use</h2>
 
 <ul class="skill-list">
-	<li>HTML - Jade - Haml - Erb</li>
-	<li>Responsive (Mobile First)</li>
-	<li>CSS (Stylus, Sass, Less)</li>
-	<li>Css Frameworks (Bootstrap, Foundation)</li>
-	<li>Javascript (Design Patterns, Testes)</li>
+	<li>HTML - Jade</li>
+	<li>SASS / LESS</li>
+	<li>Vue.js / React (Native) / AngularJS</li>
+	<li>Wordpress</li>
 	<li>NodeJS</li>
-	<li>AngularJS - ReactJS</li>
-	<li>Grunt - Gulp - Yeoman</li>
+	<li>Gulp</li>
+	<li>Webpack</li>
 	<li>Git</li>
-	<li>PHP</li>
-	<li>Python</li>
-	<li>MySQL - MongoDB</li>
-	<li>Scrum and Kanban</li>
-	<li>TDD e Continuous Integration</li>
+	<li>Photoshop / Illustrator</li>
 </ul>
 
-<h2>Projects</h2>
+<h2>Works / Projects</h2>
 
 <ul>
-	<li><a href="https://github.com/">Lorem Lorem</a></li>
-	<li><a href="https://github.com/">Ipsum Dolor</a></li>
-	<li><a href="https://github.com/">Dolor Lorem</a></li>
+	<li><a href="https://dermosil.fi/fi/">Dermoshop</a></li>
+	<li><a href="https://www.jalohelsinki.com/">Jalo Helsinki</a></li>
+	<li><a href="https://www.pharmasight.net/">Pharmasight</a></li>
+	<li><a href="https://shuffle-guide-2.herokuapp.com/">Pokemon Shuffle Guide</a></li>
 </ul>
