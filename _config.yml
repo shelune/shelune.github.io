@@ -53,18 +53,11 @@ reddit: shelune
 email: em.hieunguyen@gmail.com
 
 authors:
-    johndoe:
-        name: John Doe
-        bio: A Man who travels the world eating noodles
+    shel:
+        name: Nguyen Dinh Hieu
+        bio: A curious guy
         external-image: false
-        picture: assets/images/profile.jpg
-        twitter: johndoe
-    jamesfoster:
-        name: James Foster
-        bio: A Man who develops software with coffee
-        external-image: false
-        picture: assets/images/james.jpg
-        twitter: jamesfoster
+        picture: assets/images/avatar.png
 
 # do you want a larger site? change the option below
 # options: [normal, large] | default: normal

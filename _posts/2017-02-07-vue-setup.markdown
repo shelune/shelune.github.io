@@ -1,0 +1,73 @@
+---
+title: "Vue Setup from scratch for my personal projects"
+layout: post
+date: 2017-02-07 23:00
+tag:
+- vue
+- webpack
+image: https://vuejs.org/images/logo.png
+headerImage: false
+projects: true
+hidden: false # don't count this post in blog pagination
+description: "This is a basic setup for a running Vue.js project for future use (webpack 3.0 atm)."
+category: blog
+author: shelune
+externalLink: false
+---
+
+So my first few personal Vue projects were either generated from a webpack template or copied from a tutorial somewhere. This time I'm doing it from the beginning (with some recollections of how webpack works and some before-hand knowledge about how I would go with this particular project). This can be used as a reference in case I would come back for another Vue project and see how I desperate tried to make a Vue+Webpack thing run.
+
+I like [Vue](https://vuejs.org/). It's lightweighted and does its job well. Setting up though is a pain so previous times I just quickly grabbed a generator and get it over with. Let's see this time how I do it...
+
+# Before we start
+
+This article is gonna assume that I (most likely the readers too) have installed **nodejs** with **npm**. Besides, **webpack** should be installed too but that's optional since we're doing it from scratch.
+
+# Initiate the protocol!
+
+A basic `npm init -y` should do the trick (`-y` is a short-hand for yes-ing everything so I'd have a default project). Now we'll have `package.json` file up and running. I'll come back and add stuff to it later.
+
+Right now what we have is a casual
+```
+package.json
+```
+
+# Get webpack!
+
+Roll on to [Webpack](https://webpack.js.org). It will be the first to be installed as it processes everything we put into the project later. So:
+
+```npm i webpack webpack-dev-server --save```
+
+While I'm at it, I throw in **webpack-dev-server**, which is a very nice tool I came to know from before. It can start a **development server** with some cool *live-reload / hot-reload* features so we don't have to build and refresh everytime we add an apostrophe.  Now our *dependencies* inside `package.json` file should have something like:
+
+```
+"dependencies": {
+  "webpack": "^3.10.0",
+  "webpack-dev-server": "^2.9.7"
+}
+```
+
+Now that **webpack** is installed, let's go configure this webpack thingy! First thing to do is to create `webpack.config.js`. This is like `gulpfile.js` for **Gulp**, but we're dealing with the mighty **Webpack** here so it has to be that long of a name. So now our project folder should look like:
+```
+/node_modules
+package-lock.json
+package.json
+webpack.config.js
+```
+
+What goes into this config file then?
+
+# Some pre-thoughts
+
+Let's see what this bundling thing needs to work. So I'd go check out what I need to know about `webpack`. According to their page, there're **four** concepts to understand.
+
+- Entry
+- Output
+- Loaders
+- Plugins
+
+From what I understand then Webpack needs an **entry** so it knows where to begin its processes. Then it will need an **output** so it knows where to produce all the processed files. We'd have **loaders** where we'd tell Webpack to process files *other than Javascript* (e.g `.vue`, `.scss`, `.png`, etc.). Finally, there's **plugins** to deepen Webpack's ability to process files. 
+
+<span class="evidence">So if I imagine this webpack building as a RPG character, **loaders** should help expand its skill tree, while **plugins** increase the adeptness of each skill.</span>
+
+---
