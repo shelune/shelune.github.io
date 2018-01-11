@@ -38,7 +38,7 @@ Roll on to [Webpack](https://webpack.js.org). It will be the first to be install
 
 ```npm i webpack webpack-dev-server --save```
 
-While I'm at it, I throw in **webpack-dev-server**, which is a very nice tool I came to know from before. It can start a **development server** with some cool *live-reload / hot-reload* features so we don't have to build and refresh everytime we add an apostrophe.  Now our *dependencies* inside `package.json` file should have something like:
+While I'm at it, I throw in **webpack-dev-server**, which is a very nice tool I came to know from before. It can start a **development server** with some cool *live-reload / hot-reload* features so we don't have to build and refresh everytime we add an apostrophe.  Now our dependencies inside `package.json` file should have something like:
 
 ```
 "dependencies": {
@@ -71,3 +71,149 @@ From what I understand then Webpack needs an **entry** so it knows where to begi
 <span class="evidence">So if I imagine this webpack building as a RPG character, **loaders** should help expand its skill tree, while **plugins** increase the adeptness of each skill.</span>
 
 ---
+
+# Webpack.config.js
+
+As I'm using Webpack, the first thing I'd include in this config file is `webpack`. Also I'll throw in `path` because it handles the pathing and directory names for me. So the first 2 lines look like this
+```
+const path = require('path');
+const webpack = require('webpack');
+```
+
+We're gonna export this so webpack can pick this up and process so I'll add in these lines
+```
+const path = require('path');
+const webpack = require('webpack');
+
+module.exports = {
+
+}
+```
+
+Cool. With my **pre-thoughts**, it appears we should need 4 properties to go into this — `entry`, `output`, `module` (a.k.a `loaders`) & `plugins`. The first two are essential, so I'll go ahead and create one `index.js` first in the `src` folder and another folder called `dist` to store all the output from webpack here. My directory gets to this now
+```
+/node_modules
+/dist
+/src         ### for 'output'
+  —— main.js ### for 'entry'
+package-lock.json
+package.json
+webpack.config.js
+```
+
+The entry should  point to the file `main.js` in the `src` folder I just made. For `output`, I'll point to the `dist` folder, with the output file named `app.js`. With that in mind, the config file looks like this:
+
+```
+const path = require('path');
+const webpack = require('webpack');
+
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    filename: 'app.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/'
+  }, 
+}
+```
+
+Right so `filename` & `path` are understandable but `publicPath`? I've come to a conclusion that would help when you have your output files on a CDN or another site. So for example if I leave it as `'/dist/'`, it will become `https://[that-another-site]/dist/...`. Definitely not that simple but for the sake of simplicity I'll leave it at that.
+
+---
+
+Alright that's it for the first 2 settings. Next up is `module`. For the basics it will look like this
+```
+const path = require('path');
+const webpack = require('webpack');
+
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    filename: 'app.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/'
+  },
+  module: {
+    loaders: [
+      /// An array of different loaders go in here.
+    ]
+  }
+}
+```
+
+The loaders we'll use include:
+- Babel
+- Vue
+- CSS & SASS (with PostCSS)
+- Url
+
+Explanations will be given later so go ahead and copy paste this line to npm and run
+```
+npm i babel-loader vue-loader css-loader sass-loader url-loader --save
+```
+
+Alright, the first loader will be `babel-loader`. This enhances normal `.js` files so I can use new & experimental JS features without worrying about lack of support. `vue-loader` takes care of `.vue` file and render them out as Javascript. `css-loader` and `sass-loader` will process the styling I put in (I use SCSS). Finally `url-loader` helps with images & fonts — it loads those files into **base64 url** so I can serve them directly from the js file.
+
+Introduction is done. Now the anatomy of a loader will look something like this:
+```
+{
+  test: [regex], # check what file types should be processed
+  loader: [loader name], # name of the loader used
+  options: [optional stuff used along with this loader]
+}
+```
+
+With that I'll have this as the final configuration for loaders
+```
+const path = require('path');
+const webpack = require('webpack');
+
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    filename: 'app.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            'scss': 'vue-style-loader!css-loader!sass-loader',
+            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+          },
+          postcss: [require('postcss-cssnext')]
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ['css-loader']
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'url-loader?limit=100000',
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        loader: "url-loader?limit=100000",
+      }
+    ]
+  }
+}
+```
+
+In the case of `vue-loader`, I use `sass-loader` and `css-loader` in its options as well. This line `'scss': 'vue-style-loader!css-loader!sass-loader'` means: Use `sass-loader` on the file first, then proceed with `css-loader`, finally use `vue-style-loader`.
+
+I don't normally use naked `.css` file, but here I illustrate another case for `loader` option. Instead of `loader: 'css-loader'`, it's instead `use: ['css-loader']`. This is not required here, but `use` means for an array of loader. So <span class="evidence">**loader** option is for when you use only 1 loader, while **use** is for when you use multiple at the same time.</span>.
+
+The rest is straightforward, `url-loader` will take in those images / fonts then output an URL, but if the url size exceeds 100000 characters, it will not output it as a URL anymore.
+
+We're done with this option!
